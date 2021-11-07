@@ -9,5 +9,7 @@ class BlogCategory extends Model
 {
     use HasFactory;
 
+    protected $table = 'blogs_categories';
+
     public $guarded = [];
 }

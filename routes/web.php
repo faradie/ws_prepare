@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['middleware' => ['auth']], function(){
     Route::resource('categories', CategoryController::class)->except(['update']);
     Route::post('/category-update/{id}', [CategoryController::class, 'update'])->name('categories.update');
+
+    Route::resource('blogs', BlogController::class)->except(['update']);
+    Route::post('/blogs-update/{id}', [BlogController::class, 'update'])->name('blogs.update');
 });
