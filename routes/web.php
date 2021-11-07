@@ -23,5 +23,6 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['auth']], function(){
-    Route::resource('categories', CategoryController::class);
+    Route::resource('categories', CategoryController::class)->except(['update']);
+    Route::post('/category-update/{id}', [CategoryController::class, 'update'])->name('categories.update');
 });

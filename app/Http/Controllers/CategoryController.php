@@ -20,7 +20,18 @@ class CategoryController extends Controller
             $models = Category::all();
             return DataTables::of($models)
                 ->addColumn('action', function($model){
-                    $test = '';
+                    $test = '
+                    <div class="btn-group">
+                        <button type="button" onclick="category_edit('."'".route('categories.show',$model->id)."'".')" class="btn btn-info">Edit</button>
+                        <button type="button" class="btn btn-info dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" onclick="delete_data('."'".route('categories.destroy',$model->id)."'".","."'".csrf_token()."'".","."'".
+                            'categories_datatable'."'".","."'".'categories'."'".')">Delete</a>
+                        </div>
+                    </div>
+                    ';
                     return $test;
                 })
                 ->addIndexColumn()
@@ -72,9 +83,17 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
-        //
+        if($request->ajax()){
+            $data = Category::find($id);
+
+            return response()->json([
+                'message' => 'success',
+                'code' => 200,
+                'data' =>$data,
+            ], 200);
+        }
     }
 
     /**
@@ -97,7 +116,22 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+        ]);
+
+        $data = Category::find($id);
+
+        $data->update([
+            'title' => $request->title,
+            'slug' => Str::slug($request->title,'-'),
+        ]);
+
+        return response()->json([
+            'message' => 'success',
+            'code' => 201,
+            'data' =>$data,
+        ], 201);
     }
 
     /**
@@ -106,8 +140,19 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
-        //
+        if($request->ajax()){
+            $data = Category::find($id);
+            
+            $data->delete();
+
+            return response()->json([
+                'message' => 'success',
+                'code' => 202,
+                'data' =>$data,
+            ], 202);
+        }
     }
+
 }
