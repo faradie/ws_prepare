@@ -3,7 +3,7 @@
 @section('content')
 <div class="register-box">
     <div class="register-logo">
-      <a href="../../index2.html"><b>Admin</b>LTE</a>
+      <a href="{{ route('home') }}"><b>{{ env('APP_NAME') }}</b></a>
     </div>
   
     <div class="card">

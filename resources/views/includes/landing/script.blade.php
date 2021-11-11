@@ -1,0 +1,1 @@
+<script src="{{ asset('assets/evelyn/dist/js/main.min.js') }}"></script>

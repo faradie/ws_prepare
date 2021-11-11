@@ -16,10 +16,12 @@ use App\Http\Controllers\BlogController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.welcome');
 });
 
 Auth::routes();
+
+Route::post('/subscribe-submit', [App\Http\Controllers\LandingController::class, 'index'])->name('submit.subscribe');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

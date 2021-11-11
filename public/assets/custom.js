@@ -1,10 +1,13 @@
 
 // ==================== OTHERS ====================
+
+// digunakan untuk membersihkan validasi setiap membuka form baru
 function clearValidation(form) {
     form.find('.help-block').remove();
     form.find('.form-group').children().removeClass('is-invalid');
 }
 
+// digunakan untuk popup message
 function showMessage(mode, str) {
     var Toast = Swal.mixin({
         toast: true,
@@ -18,6 +21,7 @@ function showMessage(mode, str) {
     })
 }
 
+// digunakan untuk popup hapus data
 function swalDeleteMessage() {
     Swal.fire(
         'Deleted!',
@@ -26,6 +30,7 @@ function swalDeleteMessage() {
     )
 }
 
+// digunakan untuk delete confirmation data
 function delete_data(url, token, datatable, unit) {
     Swal.fire({
         title: 'Are you sure?',
@@ -49,6 +54,7 @@ function delete_data(url, token, datatable, unit) {
     });
 }
 
+// digunakan untuk inisialiasasi select2 dsb
 $(function () {
     //Initialize Select2 Elements
     $('.select2').select2()
@@ -62,6 +68,7 @@ $(function () {
 
 // ==================== CATEGORIES START ====================
 
+// digunakan untuk reset form category dan membuka dialog tambah categori
 function addCategories() {
     var form = $("#categories-form");
     form.trigger("reset");
@@ -73,6 +80,7 @@ function addCategories() {
     $("#categories_modal").modal({backdrop: 'static', keyboard: false});
 }
 
+// digunakan untuk reset form category, mengambil data dan membuka dialog edit categori
 function category_edit(url){
     $.ajax({
         headers: {
@@ -108,6 +116,7 @@ function category_edit(url){
 
 // ==================== BLOGS START ====================
 
+// digunakan untuk reset form blogs dan membuka dialog tambah blog
 function addBlogs() {
     var form = $("#blogs-form");
     form.trigger("reset");
@@ -120,6 +129,7 @@ function addBlogs() {
     $("#blogs_modal").modal({backdrop: 'static', keyboard: false});
 }
 
+// digunakan untuk reset form blogs, mengambil data dan membuka dialog edit blogs
 function blog_edit(url){
     $.ajax({
         headers: {

@@ -10,6 +10,8 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
 use Validator;
 use Illuminate\Validation\Rule;
+use App\Jobs\SubscribeJob;
+use App\Models\Subscription;
 
 class BlogController extends Controller
 {
@@ -87,7 +89,16 @@ class BlogController extends Controller
                     'category_id' => $value
                 ]);
             }
-    
+
+            // disini menambahkan trigger subscribe email
+
+            // 1. mendapatkan list email subscriber
+            $subscribes = Subscription::all();
+            foreach ($subscribes as $key => $value) {
+                # code...
+                $this->dispatch(new SubscribeJob($request->title,'Sahabatku',$value->email,'Ada yg baru loh!'));
+            }
+
             return response()->json([
                 'message' => 'success',
                 'code' => 201,
