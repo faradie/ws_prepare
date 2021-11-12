@@ -3,25 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ConfigController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-// Route::get('/', function () {
-//     return view('pages.welcome');
-// });
-Route::get('/', [App\Http\Controllers\LandingController::class, 'landing'])->name('landing');
-Route::get('/blog/{slug}', [App\Http\Controllers\LandingController::class, 'detail_blog'])->name('blog.detail');
 
 Auth::routes();
+Route::get('/', [App\Http\Controllers\LandingController::class, 'landing'])->name('landing');
+Route::get('/blog/{slug}', [App\Http\Controllers\LandingController::class, 'detail_blog'])->name('blog.detail');
 
 Route::post('/subscribe-submit', [App\Http\Controllers\LandingController::class, 'index'])->name('submit.subscribe');
 
@@ -33,4 +20,6 @@ Route::group(['middleware' => ['auth']], function(){
 
     Route::resource('blogs', BlogController::class)->except(['update']);
     Route::post('/blogs-update/{id}', [BlogController::class, 'update'])->name('blogs.update');
+
+    Route::resource('configs', ConfigController::class)->only(['index','update']);
 });

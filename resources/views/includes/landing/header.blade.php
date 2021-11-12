@@ -18,12 +18,18 @@
                 </h1>
             </div>
             <ul class="header-links list-reset m-0">
-                <li>
+               @auth
+               <li>
+                    <a href="{{ route('home') }}">Home</a>
+                </li>
+               @else
+               <li>
                     <a href="{{ route('login') }}">Login</a>
                 </li>
                 <li>
                     <a class="button button-sm button-shadow" href="{{ route('register') }}">Signup</a>
                 </li>
+               @endauth
             </ul>
         </div>
     </div>
