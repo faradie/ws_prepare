@@ -15,9 +15,11 @@ use App\Http\Controllers\BlogController;
 |
 */
 
-Route::get('/', function () {
-    return view('pages.welcome');
-});
+// Route::get('/', function () {
+//     return view('pages.welcome');
+// });
+Route::get('/', [App\Http\Controllers\LandingController::class, 'landing'])->name('landing');
+Route::get('/blog/{slug}', [App\Http\Controllers\LandingController::class, 'detail_blog'])->name('blog.detail');
 
 Auth::routes();
 

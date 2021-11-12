@@ -3,7 +3,7 @@
         <div class="site-header-inner">
             <div class="brand header-brand">
                 <h1 class="m-0">
-                    <a href="#">
+                    <a href="{{ route('landing') }}">
                         <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                             <title>Evelyn</title>
                             <defs>
