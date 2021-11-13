@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ConfigController;
+use App\Http\Controllers\ProductController;
 
 
 Auth::routes();
@@ -22,4 +23,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/blogs-update/{id}', [BlogController::class, 'update'])->name('blogs.update');
 
     Route::resource('configs', ConfigController::class)->only(['index','update']);
+
+    Route::resource('products', ProductController::class)->except(['update']);
+    Route::post('/products-update/{id}', [ProductController::class, 'update'])->name('products.update');
 });

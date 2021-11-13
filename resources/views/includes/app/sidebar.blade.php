@@ -60,6 +60,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="{{ route('products.index') }}" class="nav-link {{ request()->routeIs('products.*') ? 'active' : '' }}">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Products</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
                 <i class="nav-icon far fa-circle text-danger"></i>

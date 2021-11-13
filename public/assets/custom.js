@@ -148,8 +148,6 @@ function blog_edit(url){
                 mapping.push(element.id)
             });
 
-            console.log(mapping)
-
             var form = $("#blogs-form");
             form.trigger("reset");
             form.find('.modal-title').text('Update category Data');
@@ -173,3 +171,86 @@ function blog_edit(url){
         }
     });
 }
+
+// ==================== BLOGS END ====================
+
+// ==================== PRODUCT START ====================
+
+function addProducts() {
+    var form = $("#products-form");
+    form.trigger("reset");
+    form.find('[name=id_form]').removeAttr('value');
+    form.find('.modal-title').text('Add Product');
+    form.find('.btn-primary').attr('disabled', false).text('Submit');
+    form.find(".select2bs4").val([]).trigger("change");
+    clearValidation(form);
+    
+    $("#products_modal").modal({backdrop: 'static', keyboard: false});
+}
+
+$(document).ready(function(){      
+    var i=1;  
+
+    $('#add').click(function(){  
+         i++;  
+         $('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td><input type="text" name="details[]" placeholder="Enter detail product" class="form-control name_list" /></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></td></tr>');  
+    });  
+
+    $(document).on('click', '.btn_remove', function(){  
+         var button_id = $(this).attr("id");   
+         $('#row'+button_id+'').remove();  
+    });  
+
+  });  
+
+  // digunakan untuk reset form products, mengambil data dan membuka dialog edit product
+function product_edit(url){
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: url,
+        type: 'GET',
+        beforeSend: function () {
+        },
+        success: function (response) {
+
+            var form = $("#products-form");
+            form.trigger("reset");
+            form.find('.modal-title').text('Update product Data');
+            form.find('.btn-primary').attr('disabled', false).text('Save');
+            form.find('#title-form').val(response.data.title);
+            // form.find('#categories-form').select2(mapping,null,false);
+            form.find('#price-form').val(response.data.price);
+            form.find('#description-form').val(response.data.description);
+
+            $('.dynamic-added').remove();
+
+            var i = 0;
+            $.each(response.data.details, function(key, val) {
+                
+                if(i == 0){
+                    $('#row'+(i+1)).val(val.detail);
+                }else{
+                    $('#dynamic_field').append('<tr id="row'+(i+1)+'" class="dynamic-added"><td><input type="text" name="details[]" placeholder="Enter detail product" class="form-control name_list" /></td><td><button type="button" name="remove" id="'+(i+1)+'" class="btn btn-danger btn_remove">X</button></td></tr>');  
+                    $('#row'+(i+1)).find("input").val(val.detail);
+                }
+
+                i++;
+            });
+
+            form.find('#id_form').val(response.data.id);
+            clearValidation(form);
+            $('#products_modal').modal({ backdrop: 'static', keyboard: false });
+        },
+        error: function (xhr) {
+            var res = xhr.responseJSON;
+            if (xhr.status == 401) {
+                alert(auth.message.unauthorize)
+                window.location.href = auth.routes.unauthorize;
+            }
+            console.log(res)
+        }
+    });
+}
+  
